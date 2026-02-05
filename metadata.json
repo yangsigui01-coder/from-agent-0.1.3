@@ -1,0 +1,9 @@
+{
+  "name": " 0.1.3 Gemini Mobile Clone",
+  "description": "A feature-rich Gemini mobile clone with chat history, custom Gems, image/video generation, and real-time audio interaction.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
