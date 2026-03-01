@@ -16,7 +16,7 @@ interface SidebarProps {
   onSelectGem: (gemId: string) => void;
   onDeleteChat: (e: React.MouseEvent, chatId: string) => void;
   onPinChat: (e: React.MouseEvent, chatId: string) => void;
-  onRenameChat: (chatId: string, newTitle: string) => void; // Added prop
+  onRenameChat: (chatId: string, newTitle: string) => void;
   onOpenGemManager: () => void;
   onDeleteGem: (e: React.MouseEvent, gemId: string) => void;
   onPinGem: (e: React.MouseEvent, gemId: string) => void;
@@ -136,12 +136,12 @@ const Sidebar: React.FC<SidebarProps> = ({
               return textPart.text
                   .replace(/<active_inference_audit>[\s\S]*?<\/active_inference_audit>/g, '')
                   .replace(/<form_payload>[\s\S]*?<\/form_payload>/g, '')
-                  .replace(/\[SYSTEM_ANNOTATION.*?\]/g, 'Form Data')
-                  .trim() || 'Form content';
+                  .replace(/\[SYSTEM_ANNOTATION.*?\]/g, '表单数据')
+                  .trim() || '表单内容';
           }
-          if (msg.parts.some(p => p.inlineData)) return '[Image]';
-          if (msg.parts.some(p => p.fileData)) return '[File]';
-          if (msg.parts.some(p => p.functionCall)) return '[Action]';
+          if (msg.parts.some(p => p.inlineData)) return '[图片]';
+          if (msg.parts.some(p => p.fileData)) return '[文件]';
+          if (msg.parts.some(p => p.functionCall)) return '[操作]';
       }
       return '';
   };
@@ -164,7 +164,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <SearchIcon className="w-4 h-4 mr-2" />
             <input 
               type="text" 
-              placeholder="Search for chats" 
+              placeholder="搜索对话" 
               className="bg-transparent border-none outline-none text-sm w-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -176,7 +176,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             className="w-full flex items-center bg-[#2d2d2d] rounded-xl px-4 py-3 hover:bg-[#3d3d3d] transition-colors"
           >
             <PlusIcon className="w-5 h-5 mr-3 text-blue-400" />
-            <span className="font-medium text-sm">New chat</span>
+            <span className="font-medium text-sm">新对话</span>
           </button>
         </div>
 
@@ -188,7 +188,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className="w-full flex items-center px-3 py-2 rounded-lg hover:bg-[#2d2d2d] transition-colors text-sm text-gray-300"
               >
                  <TaskListIcon className="w-5 h-5 mr-3 text-green-400" />
-                 <span className="font-medium">Tasks</span>
+                 <span className="font-medium">任务</span>
               </button>
            </section>
 
@@ -216,7 +216,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                  onClick={(e) => { e.stopPropagation(); onNewGem(); onClose(); }}
                  className="text-blue-400 text-xs font-medium hover:text-blue-300 px-2 py-1 rounded"
                >
-                 Create
+                 创建
                </button>
             </div>
 
@@ -251,21 +251,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                           className="w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <EditIcon className="w-3 h-3 mr-2" />
-                          Edit
+                          编辑
                         </button>
                         <button 
                           onClick={(e) => { onPinGem(e, gem.id); setMenuOpenId(null); }}
                           className="w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <PinIcon className="w-3 h-3 mr-2" />
-                          {gem.isPinned ? 'Unpin' : 'Pin'}
+                          {gem.isPinned ? '取消置顶' : '置顶'}
                         </button>
                         <button 
                           onClick={(e) => { onDeleteGem(e, gem.id); setMenuOpenId(null); }}
                           className="w-full text-left px-4 py-2 text-xs text-red-400 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <TrashIcon className="w-3 h-3 mr-2" />
-                          Delete
+                          删除
                         </button>
                       </div>
                     )}
@@ -277,7 +277,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <section>
             <div className="px-1 mb-2">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">最近对话</h3>
             </div>
             <div className="space-y-1 pb-10">
               {filteredChats.map(chat => {
@@ -326,7 +326,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                              {chat.isPinned && <PinIcon className="w-3 h-3 text-gray-500 ml-1 flex-shrink-0" />}
                           </div>
                           <div className="truncate text-xs text-gray-500 mt-0.5 font-normal">
-                             {previewText || "New conversation"}
+                             {previewText || "新对话"}
                           </div>
                       </div>
                     </button>
@@ -347,7 +347,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           className="w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <PinIcon className="w-3 h-3 mr-2" />
-                          {chat.isPinned ? 'Unpin' : 'Pin'}
+                          {chat.isPinned ? '取消置顶' : '置顶'}
                         </button>
                         
                         <button 
@@ -355,7 +355,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           className="w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <EditIcon className="w-3 h-3 mr-2" />
-                          Rename
+                          重命名
                         </button>
 
                         <button 
@@ -363,7 +363,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           className="w-full text-left px-4 py-2 text-xs text-red-400 hover:bg-[#3d3d3d] flex items-center"
                         >
                           <TrashIcon className="w-3 h-3 mr-2" />
-                          Delete
+                          删除
                         </button>
                       </div>
                     )}
@@ -387,7 +387,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             className={`flex items-center text-sm w-full transition-colors ${isSettingsOpen ? 'text-white' : 'text-gray-400 hover:text-white'}`}
           >
             <span className="p-1 rounded-md bg-gray-800 mr-3">⚙️</span>
-            Settings & help
+            设置与帮助
           </button>
         </div>
       </div>

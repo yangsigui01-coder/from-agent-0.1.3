@@ -93,13 +93,14 @@ const CodeBlock = ({ language, value }: { language: string, value: string }) => 
   );
 };
 
+// Translate features to Chinese
 const features: ActiveFeature[] = [
-  { id: 'search', name: 'Deep Research', mode: 'text', model: 'gemini-3-pro-preview', placeholder: 'Ask complex questions requiring web research...', icon: <SearchIcon className="w-5 h-5 text-blue-400" />, config: { useSearch: true } },
-  { id: 'thinking', name: 'Deep Thinking', mode: 'text', model: 'gemini-3-pro-preview', placeholder: 'Ask questions that require deep reasoning...', icon: <BrainIcon className="w-5 h-5 text-purple-400" />, config: { useThinking: true } },
-  { id: 'image', name: 'Create Image', mode: 'image', model: 'gemini-3-pro-image-preview', placeholder: 'Describe the image you want to create...', icon: <ImageIcon className="w-5 h-5 text-pink-400" /> },
-  { id: 'video', name: 'Create Video', mode: 'video', model: 'veo-3.1-fast-generate-preview', placeholder: 'Describe the video you want to create...', icon: <VideoIcon className="w-5 h-5 text-orange-400" /> },
-  { id: 'speech', name: 'Speech', mode: 'audio', model: 'gemini-2.5-flash-native-audio-preview-12-2025', placeholder: 'Type to hear the response...', icon: <Volume2Icon className="w-5 h-5 text-green-400" />, config: { isTTS: true } },
-  { id: 'maps', name: 'Maps Grounding', mode: 'text', model: 'gemini-2.5-flash-preview-09-2025', placeholder: 'Ask for places or directions...', icon: <MapPinIcon className="w-5 h-5 text-red-400" />, config: { useMaps: true } }
+  { id: 'search', name: '深度搜索', mode: 'text', model: 'gemini-3-pro-preview', placeholder: '提出需要联网搜索的复杂问题...', icon: <SearchIcon className="w-5 h-5 text-blue-400" />, config: { useSearch: true } },
+  { id: 'thinking', name: '深度思考', mode: 'text', model: 'gemini-3-pro-preview', placeholder: '提出需要深度逻辑推理的问题...', icon: <BrainIcon className="w-5 h-5 text-purple-400" />, config: { useThinking: true } },
+  { id: 'image', name: '创建图片', mode: 'image', model: 'gemini-3-pro-image-preview', placeholder: '描述你想要生成的图片...', icon: <ImageIcon className="w-5 h-5 text-pink-400" /> },
+  { id: 'video', name: '创建视频', mode: 'video', model: 'veo-3.1-fast-generate-preview', placeholder: '描述你想要生成的视频...', icon: <VideoIcon className="w-5 h-5 text-orange-400" /> },
+  { id: 'speech', name: '语音对话', mode: 'audio', model: 'gemini-2.5-flash-native-audio-preview-12-2025', placeholder: '输入内容以收听语音回复...', icon: <Volume2Icon className="w-5 h-5 text-green-400" />, config: { isTTS: true } },
+  { id: 'maps', name: '地图服务', mode: 'text', model: 'gemini-2.5-flash-preview-09-2025', placeholder: '询问地点或路线...', icon: <MapPinIcon className="w-5 h-5 text-red-400" />, config: { useMaps: true } }
 ];
 
 const App: React.FC = () => {
@@ -134,7 +135,7 @@ const App: React.FC = () => {
   const [editingGem, setEditingGem] = useState<Gem | undefined>(undefined);
   const [chats, setChats] = useState<Chat[]>([]);
   const [gems, setGems] = useState<Gem[]>([
-    { id: 'default-gem-1', name: '生成书籍领航员', description: '将静态书籍转化为动态AI技能', instructions: '你是顶级教学设计师和Prompt工程师，擅长分析书籍核心逻辑并转化为实操指南。', color: 'bg-blue-600' },
+    { id: 'default-gem-1', name: '书籍领航员', description: '将静态书籍转化为动态AI技能', instructions: '你是顶级教学设计师和Prompt工程师，擅长分析书籍核心逻辑并转化为实操指南。', color: 'bg-blue-600' },
     { id: 'thinking-gem', name: '思考模式', description: '深度逻辑分析与推演', instructions: '始终开启深度思考，分步骤拆解问题，注重逻辑严密性。', color: 'bg-purple-600' }
   ]);
   const [formTools, setFormTools] = useState<FormTool[]>(DEFAULT_FORM_TOOLS);
@@ -244,7 +245,7 @@ const App: React.FC = () => {
   const handleModelSelect = (model: string, provider: 'gemini' | 'openai') => { setSelectedModel(model); setIsModelSelectorOpen(false); setActiveFeature(null); setApiSettings(prev => ({ ...prev, provider: provider, openai: { ...prev.openai, model: provider === 'openai' ? model : prev.openai.model } })); };
   
   // --- Chat Logic ---
-  const handleNewChat = (specificGemId?: string) => { const targetGem = specificGemId ? gems.find(g => g.id === specificGemId) : null; const newChat: Chat = { id: Date.now().toString(), title: 'New Chat', messages: [], updatedAt: Date.now(), gemId: specificGemId }; setChats(prev => [newChat, ...prev]); setCurrentChatId(newChat.id); setActiveGem(targetGem || null); setActiveFeature(null); setAttachments([]); setInputValue(''); setIsGemManagerOpen(false); setIsSettingsMenuOpen(false); setIsFormAgentManagerOpen(false); setIsTodoManagerOpen(false); setIsGeneralSettingsOpen(false); };
+  const handleNewChat = (specificGemId?: string) => { const targetGem = specificGemId ? gems.find(g => g.id === specificGemId) : null; const newChat: Chat = { id: Date.now().toString(), title: '新对话', messages: [], updatedAt: Date.now(), gemId: specificGemId }; setChats(prev => [newChat, ...prev]); setCurrentChatId(newChat.id); setActiveGem(targetGem || null); setActiveFeature(null); setAttachments([]); setInputValue(''); setIsGemManagerOpen(false); setIsSettingsMenuOpen(false); setIsFormAgentManagerOpen(false); setIsTodoManagerOpen(false); setIsGeneralSettingsOpen(false); };
   const handleSelectGem = (gemId: string) => { handleNewChat(gemId); setIsGemManagerOpen(false); };
   const handleSelectChat = (chatId: string) => { const chat = chats.find(c => c.id === chatId); if (chat) { setCurrentChatId(chatId); if (chat.gemId) setActiveGem(gems.find(g => g.id === chat.gemId) || null); else setActiveGem(null); setActiveFeature(null); setIsSidebarOpen(false); setIsGemManagerOpen(false); setIsSettingsMenuOpen(false); setIsTodoManagerOpen(false); setIsGeneralSettingsOpen(false); } };
   const handleDeleteChat = (e: React.MouseEvent, chatId: string) => { e.stopPropagation(); setChats(prev => prev.filter(c => c.id !== chatId)); if (currentChatId === chatId) { setCurrentChatId(null); setActiveGem(null); setActiveFeature(null); } };
@@ -258,7 +259,7 @@ const App: React.FC = () => {
   const handleSaveToLibrary = (payload: FormPayload) => {
       const newForm: SavedForm = {
           id: Date.now().toString(),
-          title: payload.title || "Untitled Form",
+          title: payload.title || "未命名表单",
           schema: payload,
           createdAt: Date.now()
       };
@@ -304,7 +305,7 @@ const App: React.FC = () => {
       }
   };
 
-  const handleDeleteGem = (e: React.MouseEvent, gemId: string) => { e.stopPropagation(); if (window.confirm("Are you sure?")) { setGems(prev => prev.filter(g => g.id !== gemId)); if (activeGem?.id === gemId) { setActiveGem(null); setCurrentChatId(null); } } };
+  const handleDeleteGem = (e: React.MouseEvent, gemId: string) => { e.stopPropagation(); if (window.confirm("确定要删除吗？")) { setGems(prev => prev.filter(g => g.id !== gemId)); if (activeGem?.id === gemId) { setActiveGem(null); setCurrentChatId(null); } } };
   const handlePinGem = (e: React.MouseEvent, gemId: string) => { e.stopPropagation(); setGems(prev => prev.map(g => g.id === gemId ? { ...g, isPinned: !g.isPinned } : g)); };
   const handleEditGem = (gemId: string) => { const gemToEdit = gems.find(g => g.id === gemId); if (gemToEdit) { setEditingGem(gemToEdit); setShowGemEditor(true); setIsSidebarOpen(false); } };
   const handleSaveGem = (gem: Gem) => { setGems(prev => { const exists = prev.some(g => g.id === gem.id); if (exists) return prev.map(g => g.id === gem.id ? gem : g); return [gem, ...prev]; }); setShowGemEditor(false); setEditingGem(undefined); if (activeGem?.id === gem.id) setActiveGem(gem); else if (!gems.some(g => g.id === gem.id)) handleSelectGem(gem.id); };
@@ -347,7 +348,7 @@ const App: React.FC = () => {
     if (!targetChatId) {
       const newId = Date.now().toString(); 
       // Default to "New Chat" - title will be generated later
-      const newChat: Chat = { id: newId, title: 'New Chat', messages: [], updatedAt: Date.now(), gemId: activeGem?.id };
+      const newChat: Chat = { id: newId, title: '新对话', messages: [], updatedAt: Date.now(), gemId: activeGem?.id };
       setChats(prev => [newChat, ...prev]);
       setCurrentChatId(newId);
       targetChatId = newId;
@@ -450,7 +451,7 @@ const App: React.FC = () => {
 
               // --- AUTO TITLE GENERATION ---
               const chatTitle = chats.find(c => c.id === targetChatId)?.title;
-              if (targetChatId && currentHistory.length <= 4 && (chatTitle === 'New Chat' || !chatTitle)) {
+              if (targetChatId && currentHistory.length <= 4 && (chatTitle === '新对话' || !chatTitle)) {
                   const firstUserMsg = currentHistory.find(m => m.role === 'user')?.parts[0].text;
                   const firstModelMsg = response.text;
                   
@@ -477,7 +478,7 @@ const App: React.FC = () => {
       if (model.includes('2.5-flash')) return '2.5 Flash'; 
       return model;
   };
-  const getModelPlaceholder = () => { if (apiSettings.provider === 'openai') return `Ask ${apiSettings.openai.model || 'AI'}`; if (activeFeature) return activeFeature.placeholder; return `Ask ${getModelLabel(selectedModel)}`; };
+  const getModelPlaceholder = () => { if (apiSettings.provider === 'openai') return `询问 ${apiSettings.openai.model || 'AI'}`; if (activeFeature) return activeFeature.placeholder; return `询问 ${getModelLabel(selectedModel)}`; };
 
   // --- RENDER HELPERS ---
   const getGroupedMessages = (messages: Message[]) => {
@@ -499,7 +500,7 @@ const App: React.FC = () => {
             <details className="group">
                 <summary className="list-none cursor-pointer flex items-center space-x-2 text-xs font-bold text-gray-500 uppercase tracking-widest hover:text-gray-300 transition-colors select-none py-1 bg-[#1e1e1e]/50 rounded-lg px-3 border border-transparent hover:border-gray-800">
                     <SparklesIcon className="w-3 h-3 text-blue-500" />
-                    <span>Automated Action Sequence ({totalCalls} steps)</span>
+                    <span>自动化操作序列 ({totalCalls} 步)</span>
                     <ChevronDownIcon className="w-3 h-3 transition-transform group-open:rotate-180" />
                 </summary>
                 <div className="mt-2 pl-3 border-l-2 border-gray-800 space-y-3">
@@ -525,7 +526,7 @@ const App: React.FC = () => {
                <details className="group" open={false}>
                   <summary className="list-none cursor-pointer flex items-center space-x-2 text-xs font-bold text-gray-500 uppercase tracking-widest hover:text-gray-300 transition-colors select-none py-1">
                       <SparklesIcon className="w-3 h-3 text-purple-500" />
-                      <span>Thinking Process {msg.thinkingDuration ? `(${msg.thinkingDuration.toFixed(1)}s)` : ''}</span>
+                      <span>思考过程 {msg.thinkingDuration ? `(${msg.thinkingDuration.toFixed(1)}s)` : ''}</span>
                       <ChevronDownIcon className="w-3 h-3 transition-transform group-open:rotate-180" />
                   </summary>
                   <div className="mt-2 pl-3 border-l-2 border-gray-800 space-y-3">
@@ -539,7 +540,7 @@ const App: React.FC = () => {
                  {toolCallParts.length > 0 && (
                     <div className="bg-[#1e1e1e] border border-gray-800 rounded-lg overflow-hidden mb-2">
                         <div className="bg-[#1a1a1a] px-3 py-1.5 border-b border-gray-800 flex items-center gap-2">
-                            <span className="text-[10px] text-blue-400 font-bold uppercase">⚡ Tool Call</span>
+                            <span className="text-[10px] text-blue-400 font-bold uppercase">⚡ 工具调用</span>
                         </div>
                         <div className="p-3 font-mono text-[10px] text-gray-500 overflow-x-auto">
                         {toolCallParts.map((part: any, i) => (
@@ -554,7 +555,7 @@ const App: React.FC = () => {
                  {toolResponseParts.length > 0 && (
                     <div className="bg-[#1e1e1e] border border-gray-800 rounded-lg overflow-hidden">
                         <div className="bg-[#1a1a1a] px-3 py-1.5 border-b border-gray-800 flex items-center gap-2">
-                            <span className="text-[10px] text-green-500 font-bold uppercase">✓ Tool Result</span>
+                            <span className="text-[10px] text-green-500 font-bold uppercase">✓ 工具结果</span>
                         </div>
                         <div className="p-3 font-mono text-[10px] text-gray-500 overflow-x-auto">
                         {toolResponseParts.map((part: any, i) => (
@@ -580,7 +581,7 @@ const App: React.FC = () => {
                     try { const jsonMatch = part.text?.match(/\[SYSTEM_ANNOTATION: Form Submission Data\]\s*([\s\S]*)/); if (jsonMatch && jsonMatch[1]) submittedData = JSON.parse(jsonMatch[1]); } catch (e) { }
                     return (
                         <div key={i} className="bg-[#1c64f2] text-white p-4 rounded-xl -mx-2 -my-1 shadow-md">
-                            <div className="border-b border-white/20 pb-2 mb-2 text-xs font-bold uppercase opacity-80">Form Data</div>
+                            <div className="border-b border-white/20 pb-2 mb-2 text-xs font-bold uppercase opacity-80">表单数据</div>
                             <ul className="space-y-1">
                                 {Object.entries(submittedData).map(([key, value]) => ( <li key={key} className="text-xs flex"><span className="opacity-70 mr-2">{key}:</span><span>{String(value)}</span></li> ))}
                             </ul>
@@ -608,14 +609,14 @@ const App: React.FC = () => {
                 return (
                     <div key={i} className="mb-2 last:mb-0 w-full">
                         {part.inlineData && part.inlineData.mimeType.startsWith('image') && ( <img src={`data:${part.inlineData.mimeType};base64,${part.inlineData.data}`} alt="Attachment" className="rounded-xl mb-3 max-w-full h-auto max-h-[300px] object-cover" /> )}
-                        {part.fileData && ( <div className="flex items-center p-3 bg-black/20 rounded-lg mb-2"> <FileIcon className="w-6 h-6 mr-2 text-green-400" /> <div className="flex flex-col"> <span className="text-xs text-gray-200 font-medium">Document Uploaded</span> <span className="text-[10px] text-gray-400 truncate max-w-[150px]">{part.fileData.mimeType}</span> </div> </div> )}
+                        {part.fileData && ( <div className="flex items-center p-3 bg-black/20 rounded-lg mb-2"> <FileIcon className="w-6 h-6 mr-2 text-green-400" /> <div className="flex flex-col"> <span className="text-xs text-gray-200 font-medium">文件上传</span> <span className="text-[10px] text-gray-400 truncate max-w-[150px]">{part.fileData.mimeType}</span> </div> </div> )}
                         {cleanText && ( <div className="markdown-body"> <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code({node, inline, className, children, ...props}: any) { const match = /language-(\w+)/.exec(className || ''); const isCodeBlock = !inline && match; if (isCodeBlock) return <CodeBlock language={match ? match[1] : ''} value={String(children).replace(/\n$/, '')} />; return <code className={className} {...props}>{children}</code>; } }}>{cleanText.replace(/<response>|<\/response>/g, '')}</ReactMarkdown> </div> )}
                     </div>
                 );
             })}
             {msg.groundingUrls && msg.groundingUrls.length > 0 && (
                 <div className="mt-5 pt-4 border-t border-gray-800 space-y-3">
-                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Sources</p>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">来源</p>
                 <div className="flex flex-wrap gap-2">
                     {msg.groundingUrls.map((url, i) => ( <a key={i} href={url} target="_blank" rel="noreferrer" className="flex items-center space-x-2 bg-[#1e1e1e] border border-gray-800 rounded-full px-3 py-1 text-xs text-blue-400 hover:bg-[#2d2d2d] transition-colors"> <span className="truncate max-w-[120px]">{new URL(url).hostname}</span> </a> ))}
                 </div>
@@ -691,26 +692,26 @@ const App: React.FC = () => {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500">Hello, I'm Gemini.</h1>
-                  <p className="text-gray-400 text-lg">How can I help you today?</p>
+                  <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500">你好, 我是 Gemini</h1>
+                  <p className="text-gray-400 text-lg">今天有什么我可以帮你的吗？</p>
                 </div>
               )}
               {!activeFeature && (
                 <div className="grid grid-cols-2 gap-3 w-full max-w-md px-4">
                   <button onClick={() => handleSelectFeature(features[0])} className="bg-[#1a1a1a] p-5 rounded-3xl text-left hover:bg-[#2d2d2d] transition-all border border-gray-800/30 active:scale-[0.98] group">
                     <div className="bg-blue-500/10 w-10 h-10 rounded-xl flex items-center justify-center text-blue-400 mb-3 group-hover:scale-110 transition-transform"><SearchIcon className="w-6 h-6"/></div>
-                    <p className="text-xs font-semibold leading-tight">Use Deep Research</p>
+                    <p className="text-xs font-semibold leading-tight">深度搜索</p>
                   </button>
                   <button onClick={() => handleSelectFeature(features[2])} className="bg-[#1a1a1a] p-5 rounded-3xl text-left hover:bg-[#2d2d2d] transition-all border border-gray-800/30 active:scale-[0.98] group">
                     <div className="bg-purple-500/10 w-10 h-10 rounded-xl flex items-center justify-center text-purple-400 mb-3 group-hover:scale-110 transition-transform"><BananaIcon className="w-6 h-6"/></div>
-                    <p className="text-xs font-semibold leading-tight">Generate creative images</p>
+                    <p className="text-xs font-semibold leading-tight">生成创意图片</p>
                   </button>
                 </div>
               )}
               {activeFeature && (
                  <div className="bg-[#1a1a1a] px-6 py-4 rounded-3xl border border-gray-800/50 flex items-center gap-4">
                     <div className="p-2 bg-gray-800 rounded-full">{activeFeature.icon}</div>
-                    <div className="text-left"><p className="text-sm font-bold text-white">Active Mode: {activeFeature.name}</p><p className="text-xs text-gray-400">Model: {activeFeature.model}</p></div>
+                    <div className="text-left"><p className="text-sm font-bold text-white">当前模式: {activeFeature.name}</p><p className="text-xs text-gray-400">模型: {activeFeature.model}</p></div>
                  </div>
               )}
             </div>
@@ -726,7 +727,7 @@ const App: React.FC = () => {
               {isTyping && (
                 <div className="flex items-center space-x-2 px-3 mb-10 text-gray-500 animate-pulse">
                   <SparklesIcon className="w-4 h-4" />
-                  <span className="text-sm font-medium">Gemini is thinking...</span>
+                  <span className="text-sm font-medium">Gemini 正在思考...</span>
                 </div>
               )}
             </div>
@@ -757,7 +758,7 @@ const App: React.FC = () => {
                     onClick={() => setIsFormLibraryOpen(!isFormLibraryOpen)} 
                     className="flex items-center justify-center w-12 h-12 bg-[#1e1e1e] hover:bg-[#2d2d2d] text-yellow-400 rounded-full shadow-xl border border-gray-800 animate-in zoom-in fade-in duration-300 delay-100 pointer-events-auto transition-transform active:scale-90 z-50" 
                     style={{ position: 'fixed', right: '24px', bottom: '90px' }}
-                    title="Saved Forms"
+                    title="已保存表单"
                   >
                     <BookmarkIcon className="w-5 h-5" />
                   </button>
@@ -767,9 +768,9 @@ const App: React.FC = () => {
              {/* ... mention query ... */}
              {mentionQuery !== null && (
                <div className="bg-[#1e1e1e] rounded-xl border border-gray-700 shadow-2xl overflow-hidden mb-2 animate-in slide-in-from-bottom-5 absolute bottom-full left-0 w-full z-50 max-h-48 overflow-y-auto">
-                  <div className="px-3 py-2 bg-[#151515] border-b border-gray-800 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Select Task to Reference</div>
+                  <div className="px-3 py-2 bg-[#151515] border-b border-gray-800 text-[10px] font-bold text-gray-500 uppercase tracking-wider">选择要引用的任务</div>
                   {todos.filter(t => !t.completed && t.text.toLowerCase().includes(mentionQuery.toLowerCase())).length === 0 ? (
-                     <div className="p-3 text-sm text-gray-500 text-center">No active tasks match "{mentionQuery}"</div>
+                     <div className="p-3 text-sm text-gray-500 text-center">无匹配的活动任务 "{mentionQuery}"</div>
                   ) : (
                      todos.filter(t => !t.completed && t.text.toLowerCase().includes(mentionQuery.toLowerCase())).map(todo => (
                         <button key={todo.id} onMouseDown={(e) => { e.preventDefault(); handleMentionSelect(todo); }} className="w-full text-left px-4 py-3 hover:bg-[#2d2d2d] transition-colors flex items-center justify-between group"><span className="text-sm text-gray-300 group-hover:text-white truncate flex-1">{todo.text}</span><span className="text-xs text-gray-600 font-mono ml-2">#{todo.id.slice(-4)}</span></button>
@@ -780,24 +781,24 @@ const App: React.FC = () => {
              {(isInputExpanded || !isFormAgentMode) && (
                 <div className="animate-in slide-in-from-bottom-5 fade-in duration-300">
                   {/* ... menus ... */}
-                  {isAttachmentMenuOpen && (<div className="bg-[#1e1e1e] rounded-[32px] p-2 custom-shadow mb-2 border border-gray-800 animate-in slide-in-from-bottom-10 fade-in duration-200"><div className="grid grid-cols-1 gap-1"><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><CameraIcon className="w-5 h-5 mr-4 text-gray-400" /> Camera</button><button onClick={() => fileInputRef.current?.click()} className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><FileIcon className="w-5 h-5 mr-4 text-gray-400" /> Upload (Images/PDF/EPUB)</button><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><span className="w-5 h-5 mr-4 flex items-center justify-center text-gray-400">📁</span> Add from Drive</button><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><ImageIcon className="w-5 h-5 mr-4 text-gray-400" /> Photos</button></div></div>)}
+                  {isAttachmentMenuOpen && (<div className="bg-[#1e1e1e] rounded-[32px] p-2 custom-shadow mb-2 border border-gray-800 animate-in slide-in-from-bottom-10 fade-in duration-200"><div className="grid grid-cols-1 gap-1"><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><CameraIcon className="w-5 h-5 mr-4 text-gray-400" /> 相机</button><button onClick={() => fileInputRef.current?.click()} className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><FileIcon className="w-5 h-5 mr-4 text-gray-400" /> 上传 (图片/PDF/EPUB)</button><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><span className="w-5 h-5 mr-4 flex items-center justify-center text-gray-400">📁</span> 从云端添加</button><button className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors"><ImageIcon className="w-5 h-5 mr-4 text-gray-400" /> 照片库</button></div></div>)}
                   {isAiFeatureMenuOpen && (<div className="bg-[#1e1e1e] rounded-[32px] p-2 custom-shadow mb-2 border border-gray-800 animate-in slide-in-from-bottom-10 fade-in duration-200 max-h-[60vh] overflow-y-auto"><div className="grid grid-cols-1 gap-1">{features.map((feature) => (<button key={feature.id} onClick={() => handleSelectFeature(feature)} className="flex items-center px-5 py-4 hover:bg-[#2d2d2d] rounded-[24px] text-sm font-medium transition-colors">{feature.icon}{feature.name}</button>))}</div></div>)}
                   
-                  {isModelSelectorOpen && (<div className="bg-[#1e1e1e] rounded-[32px] p-2 custom-shadow mb-2 border border-gray-800 animate-in slide-in-from-bottom-10 fade-in duration-200 max-h-[60vh] overflow-y-auto absolute bottom-full right-0 w-64 z-50"><p className="px-5 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Model selection</p><div className="grid grid-cols-1 gap-1"><button onClick={() => handleModelSelect('gemini-3-pro-preview', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-3-pro-preview' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 3 Pro</span><span className="text-xs text-gray-500">Next-gen reasoning engine</span></button><button onClick={() => handleModelSelect('gemini-3-flash-preview', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-3-flash-preview' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 3 Flash</span><span className="text-xs text-gray-500">Next-gen speed model</span></button><button onClick={() => handleModelSelect('gemini-2.5-flash-preview-09-2025', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-2.5-flash-preview-09-2025' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 2.5 Flash</span><span className="text-xs text-gray-500">Fast and efficient</span></button>{apiSettings.openai.selectedModels && apiSettings.openai.selectedModels.length > 0 && (<><div className="h-px bg-gray-800 mx-4 my-2"></div>{apiSettings.openai.selectedModels.map(modelId => (<button key={modelId} onClick={() => handleModelSelect(modelId, 'openai')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === modelId ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">{modelId}</span><span className="text-xs text-gray-500">Custom Favorite</span></button>))}</>)}</div></div>)}
+                  {isModelSelectorOpen && (<div className="bg-[#1e1e1e] rounded-[32px] p-2 custom-shadow mb-2 border border-gray-800 animate-in slide-in-from-bottom-10 fade-in duration-200 max-h-[60vh] overflow-y-auto absolute bottom-full right-0 w-64 z-50"><p className="px-5 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">选择模型</p><div className="grid grid-cols-1 gap-1"><button onClick={() => handleModelSelect('gemini-3-pro-preview', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-3-pro-preview' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 3 Pro</span><span className="text-xs text-gray-500">下一代推理引擎</span></button><button onClick={() => handleModelSelect('gemini-3-flash-preview', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-3-flash-preview' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 3 Flash</span><span className="text-xs text-gray-500">下一代高速模型</span></button><button onClick={() => handleModelSelect('gemini-2.5-flash-preview-09-2025', 'gemini')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === 'gemini-2.5-flash-preview-09-2025' ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">Gemini 2.5 Flash</span><span className="text-xs text-gray-500">快速且高效</span></button>{apiSettings.openai.selectedModels && apiSettings.openai.selectedModels.length > 0 && (<><div className="h-px bg-gray-800 mx-4 my-2"></div>{apiSettings.openai.selectedModels.map(modelId => (<button key={modelId} onClick={() => handleModelSelect(modelId, 'openai')} className={`flex flex-col px-5 py-3 rounded-[24px] transition-colors ${selectedModel === modelId ? 'bg-[#2d2d2d]' : 'hover:bg-[#2d2d2d]'}`}><span className="text-sm font-bold">{modelId}</span><span className="text-xs text-gray-500">自定义收藏</span></button>))}</>)}</div></div>)}
 
                   <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept={ACCEPTED_FILE_TYPES} multiple />
 
                   <form onSubmit={handleSendMessage} className="bg-[#1e1e1e] rounded-[32px] border border-gray-800 shadow-2xl transition-all p-4 mb-0 relative">
                     {isFormAgentMode && (<button type="button" onClick={() => setIsInputExpanded(false)} className="absolute -top-2 -right-2 bg-gray-800 text-gray-400 p-1.5 rounded-full border border-gray-700 hover:text-white transition-colors z-10"><ChevronDownIcon className="w-4 h-4" /></button>)}
                     {attachments.length > 0 && (<div className="flex gap-2 overflow-x-auto pb-3 mb-2 scrollbar-hide">{attachments.map((att, idx) => (<div key={idx} className="relative group flex-shrink-0"><button onClick={() => removeAttachment(idx)} type="button" className="absolute -top-1.5 -right-1.5 bg-gray-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs z-10 border border-[#1e1e1e]">✕</button>{att.previewUrl ? <img src={att.previewUrl} alt="Preview" className="h-16 w-16 object-cover rounded-lg border border-gray-700" /> : <div className="h-16 w-16 bg-gray-800 rounded-lg flex flex-col items-center justify-center border border-gray-700 p-1"><FileIcon className="w-6 h-6 text-gray-400 mb-1" /><span className="text-[8px] text-gray-400 w-full text-center truncate px-1">{att.file.name.split('.').pop()?.toUpperCase()}</span></div>}</div>))}</div>)}
-                    <div className="w-full"><textarea value={inputValue} onChange={handleInput} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { if (mentionQuery !== null) { e.preventDefault(); } else { e.preventDefault(); handleSendMessage(); } } }} placeholder={isFormAgentMode ? "Describe task to start Form Agent..." : getModelPlaceholder()} className="w-full bg-transparent border-none outline-none text-[17px] text-[#e3e3e3] placeholder-gray-500 resize-none min-h-[24px] max-h-40 leading-relaxed" rows={1} /></div>
+                    <div className="w-full"><textarea value={inputValue} onChange={handleInput} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { if (mentionQuery !== null) { e.preventDefault(); } else { e.preventDefault(); handleSendMessage(); } } }} placeholder={isFormAgentMode ? "描述任务以启动表单智能体..." : getModelPlaceholder()} className="w-full bg-transparent border-none outline-none text-[17px] text-[#e3e3e3] placeholder-gray-500 resize-none min-h-[24px] max-h-40 leading-relaxed" rows={1} /></div>
                     <div className="flex items-center justify-between mt-5">
                        <div className="flex items-center space-x-2">
                            <button type="button" onClick={() => setIsAttachmentMenuOpen(!isAttachmentMenuOpen)} className="p-2 text-gray-400 hover:text-white transition-colors"><PlusIcon className="w-6 h-6" /></button>
                            <button type="button" onClick={() => setIsAiFeatureMenuOpen(!isAiFeatureMenuOpen)} className="p-2 text-gray-400 hover:text-white transition-colors"><SettingsAdjustIcon className="w-6 h-6" /></button>
-                           <button type="button" onClick={() => setIsFormAgentMode(!isFormAgentMode)} className={`p-2 transition-colors rounded-lg ${isFormAgentMode ? 'text-blue-400 bg-blue-900/20' : 'text-gray-400 hover:text-white'}`} title="Toggle Form Agent Mode"><ClipboardListIcon className="w-6 h-6" /></button>
+                           <button type="button" onClick={() => setIsFormAgentMode(!isFormAgentMode)} className={`p-2 transition-colors rounded-lg ${isFormAgentMode ? 'text-blue-400 bg-blue-900/20' : 'text-gray-400 hover:text-white'}`} title="切换表单智能体模式"><ClipboardListIcon className="w-6 h-6" /></button>
                            {/* Saved Forms Button */}
-                           <button type="button" onClick={() => setIsFormLibraryOpen(!isFormLibraryOpen)} className={`p-2 transition-colors rounded-lg ${isFormLibraryOpen ? 'text-yellow-400 bg-yellow-900/20' : 'text-gray-400 hover:text-white'}`} title="My Forms Library"><BookmarkIcon className="w-5 h-5" /></button>
+                           <button type="button" onClick={() => setIsFormLibraryOpen(!isFormLibraryOpen)} className={`p-2 transition-colors rounded-lg ${isFormLibraryOpen ? 'text-yellow-400 bg-yellow-900/20' : 'text-gray-400 hover:text-white'}`} title="我的表单库"><BookmarkIcon className="w-5 h-5" /></button>
                         </div>
                        <div className="flex items-center space-x-3"><button type="button" onClick={() => setIsModelSelectorOpen(!isModelSelectorOpen)} className="flex items-center space-x-1 px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors text-sm font-medium text-gray-400"><span>{getModelLabel(selectedModel)}</span><span className="text-[8px] opacity-40 ml-1">▼</span></button>{(inputValue.trim() || attachments.length > 0) ? (<button type="submit" className="p-2.5 bg-blue-600 text-white rounded-full shadow-lg active:scale-95 transition-all"><SendIcon className="w-5 h-5" /></button>) : (<button type="button" className="p-2.5 text-gray-400 hover:text-white transition-colors"><MicIcon className="w-6 h-6" /></button>)}</div>
                     </div>
